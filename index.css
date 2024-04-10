@@ -1,0 +1,143 @@
+*{
+    margin : 0;
+    /* background-color: #e3f2fd; */
+}
+
+header{
+    width: 100%;
+}
+
+nav{
+    background-color: lightslategray;
+}
+
+a{
+    text-decoration: none;
+}
+
+table{
+    width: 70%;
+    border: none;
+    padding: 10px;
+    margin: 0 20%;
+}
+
+td{
+    text-align: center;
+}
+
+div{
+    margin: 50px 30px;
+    width: 100%;
+    border-bottom: 1px solid white;
+}
+
+h1{
+    text-align: center;
+    color: #2f82a1;
+    font-size: 50px;
+    margin: auto;
+}
+
+h3{
+    font-size: 25px;
+    color: #2f82a1;
+    padding: 20px 0px 30px 40px;
+}
+
+p{
+    text-align: justify;
+    color: #517d96;
+    font-size: 20px;
+    padding: 20px;
+}
+
+button{
+    border: 2px solid black;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    background-color:transparent;
+}
+
+ul{
+    list-style-type: none;
+    margin: 10px;
+    padding: 0;
+}
+
+li{
+    display:block;
+    float: right;
+    margin: 10px;
+}
+
+li a{
+    color: white;
+    padding: 30px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+li a:hover{
+    font-size: 22px;
+    color: aliceblue;
+}
+
+#home-page{
+    width: 100%;
+    height: 600px;
+    margin: 10px 0;
+    background-image: url("background1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+#home-page h1{
+    font-size: 60px;
+    padding: 250px;
+    color: white;
+    text-align: center;
+}
+
+#sector img{
+    width: 200px;
+    height: 200px;
+    padding-top: 15px;
+}
+
+#practice img,#review img,footer img{
+    width: 300px;
+    height: 350px;
+}
+
+#practice button,#review button{
+    padding: 10px 20px;
+    color: #517d96;
+    font-size: 20px;
+    background-color: transparent;
+    border: solid 2px #517d96;
+    border-radius: 5px;
+    text-transform: capitalize;
+}
+
+.fa {
+    font-size: 30px;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+}
+button:hover { 
+    -o-transition:.5s; 
+    -ms-transition:.5s; 
+    -moz-transition:.5s; 
+    -webkit-transition:.5s; 
+    transition:.5s; 
+    box-shadow: 10px 10px 5px #888888; 
+}

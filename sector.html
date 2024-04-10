@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Sectors</title>
+    <link rel="stylesheet" href="sector.css>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sector-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .it-department {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .tools-used {
+            font-size: 16px;
+        }
+
+        .company-list {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div  class="sectors">
+        <h1>Job Sectors</h1>
+        <ul>
+            <li><a href="#" class="sector-link" data-sector="Information Technology">Information Technology</a> - Approx. 100 companies</li>
+            <li><a href="#" class="sector-link" data-sector="Healthcare">Healthcare</a> - Approx. 50 companies</li>
+            <li><a href="#" class="sector-link" data-sector="Finance">Finance</a> - Approx. 60 companies</li>
+            <li><a href="#" class="sector-link" data-sector="Manufacturing">Manufacturing</a> - Approx. 30 companies</li>
+            <li><a href="#" class="sector-link" data-sector="Education">Education</a> - Approx. 20 companies</li>
+        </ul>
+    </div>
+
+    <div class="sector-details" style="display: none;">
+        <h2 id="sector-name">Sector Details</h2>
+        <p id="it-department">IT Department: Software Development</p>
+        <p id="tools-used">Tools Used: HTML, CSS, JavaScript, Python</p>
+        <select id="company-dropdown">
+            <option value="">Select a Company</option>
+        </select>
+        <div id="company-details" style="display: none;">
+            <h3 id="company-name">Company Details</h3>
+            <p id="number-of-workers">Number of Workers: 1000</p>
+            <a href="Aptitude1.html"><button>Go For Quiz</button></a><br><br>
+            <a id="company-website" href="#" target="_blank">Company Website</a>
+        </div>
+    </div>
+
+    <script>
+        const sectors = document.querySelector('.sectors');
+        const sectorDetails = document.querySelector('.sector-details');
+
+        const sectorLinkElements = document.querySelectorAll('.sector-link');
+        const sectorNameElement = document.getElementById('sector-name');
+        const itDepartmentElement = document.getElementById('it-department');
+        const toolsUsedElement = document.getElementById('tools-used');
+        const companyDropdown = document.getElementById('company-dropdown');
+        const companyDetails = document.getElementById('company-details');
+        const companyNameElement = document.getElementById('company-name');
+        const numberOfWorkersElement = document.getElementById('number-of-workers');
+        const companyWebsiteElement = document.getElementById('company-website');
+
+        // Sample data for companies (you can replace this with your actual data)
+        const companyData = {
+            'Information Technology': [
+                { name: 'Company A', workers: 1000, website: 'https://www.companyA.com' },
+                { name: 'Company B', workers: 800, website: 'https://www.companyB.com' },
+                // Add more companies here for the Information Technology sector
+            ],
+            'Healthcare': [
+                { name: 'Health Company X', workers: 500, website: 'https://www.healthcompanyX.com' },
+                { name: 'Health Company Y', workers: 700, website: 'https://www.healthcompanyY.com' },
+                // Add more companies here for the Healthcare sector
+            ],
+            // Add data for other sectors in a similar format
+        };
+
+        // Function to populate the list of companies for the selected sector
+        function populateCompanyList(sector) {
+            companyDropdown.innerHTML = '<option value="">Select a Company</option>';
+            const companies = companyData[sector];
+            if (companies) {
+                companies.forEach(company => {
+                    const option = document.createElement('option');
+                    option.value = company.name;
+                    option.textContent = company.name;
+                    companyDropdown.appendChild(option);
+                });
+            }
+        }
+
+        sectorLinkElements.forEach(sectorLink => {
+            sectorLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sector = e.target.getAttribute('data-sector');
+                sectorNameElement.textContent = sector;
+                itDepartmentElement.textContent = 'IT Department: Software Development';
+                toolsUsedElement.textContent = 'Tools Used: HTML, CSS, JavaScript, Python';
+                populateCompanyList(sector);
+                sectorDetails.style.display = 'block';
+                companyDetails.style.display = 'none';
+            });
+        });
+
+        companyDropdown.addEventListener('change', (e) => {
+            const selectedCompany = e.target.value;
+            if (selectedCompany) {
+                const selectedSector = sectorNameElement.textContent;
+                const selectedCompanies = companyData[selectedSector];
+                const company = selectedCompanies.find(c => c.name === selectedCompany);
+                companyNameElement.textContent = company.name;
+                numberOfWorkersElement.textContent = `Number of Workers: ${company.workers}`;
+                companyWebsiteElement.href = company.website;
+                companyDetails.style.display = 'block';
+            } else {
+                companyDetails.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

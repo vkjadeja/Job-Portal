@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="review.css">
+    <title>Review Page</title>
+</head>
+<body>
+    <h1>Review Page</h1>
+    <form action="review.php" method="GET" id="reviewForm">
+        <label for="company">Select a company:</label>
+        <select id="company" name="company">
+            <option value="Company A">Company A</option>
+            <option value="Company B">Company B</option>
+            <option value="Company C">Company C</option>
+        </select>
+        <textarea id="review" name="review" placeholder="Write a review"></textarea>
+        <button type="submit">Submit</button>
+        <div id="comments">
+            <!-- Comments will be displayed here -->
+        </div>
+    </form>
+    <script src="review.js"></script>
+
+</body>
+</html>

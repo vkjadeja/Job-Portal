@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Analysis Quiz</title>
+  <link rel="stylesheet" href="Quiz.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Start Quiz</h1>
+    <div id="quiz"></div>
+    <div id="result" class="result"></div>
+    <button id="submit" class="button">Submit</button>
+    <button id="retry" class="button hide">Retry</button>
+    <button id="showAnswer" class="button hide">Show Answer</button>
+  </div>
+  <script>
+    const quizData = [
+    {
+      question: '1) What is the first step in the data analysis process?',
+      options: ['Data Visualization', 'Data Collection', 'Data Cleaning', 'Data Modeling'],
+      answer: 'Data Collection',
+    },
+    {
+      question: '2) Which of the following is not a measure of central tendency?',
+      options: ['Mean', 'Median', 'Mode', 'Variance'],
+      answer: 'Variance',
+    },
+    {
+      question: '3) What does the term "Outlier" refer to in data analysis?',
+      options: ['A data point that falls within the expected range', 'A data point that is unusually high', 'A data point that is unusually low', 'A data point that deviates significantly from the other data points'],
+      answer: 'A data point that deviates significantly from the other data points',
+    },
+    {
+      question: '4) Which data visualization type is suitable for showing the distribution of a single variable?',
+      options: ['Scatter Plot', 'Bar Chart', 'Histogram', 'Pie Chart'],
+      answer: 'Histogram',
+    },
+    {
+      question: '5) What is the purpose of hypothesis testing in data analysis?',
+      options: ['To summarize data','To make predictions','To draw conclusions about a population based on sample data','To clean and preprocess data'],
+      answer: 'To draw conclusions about a population based on sample data',
+    },
+    {
+      question: '6) Which statistical test is used to determine the association between two categorical variables?',
+      options: ['T-test', 'Chi-squared test', 'ANOVA', 'Regression analysis'],
+      answer: 'Chi-squared test',
+    },
+    {
+      question: '7) In a time series analysis, what does the term "seasonality" refer to?',
+      options: ['The time it takes for data to be collected','Repeating patterns or trends at regular intervals','The process of data cleaning','The mean value of the time series data'],
+      answer: 'Repeating patterns or trends at regular intervals',
+    },
+    {
+      question: '8) Which data preprocessing technique is used to handle missing values in a dataset?',
+      options: ['Regression','Stansrdization','Imputation','Outlier detection'],
+      answer: 'Imputation',
+    },
+    {
+      question: '9) What is the purpose of a correlation coefficient in data analysis?',
+      options: ['To measure the strength and direction of a linear relationship between two variables','To classify data into categories','To describe the spread of data values','To identify outliers in the data'],
+      answer: 'To measure the strength and direction of a linear relationship between two variables',
+    },
+    {
+      question: '10) Which data analysis technique is used for reducing the dimensionality of a dataset while preserving important information?',
+      options: ['Principal Component Analysis (PCA)','Logistic Regression','K-Means Clustering','Linear Regression'],
+      answer: 'Principal Component Analysis (PCA)',
+    },
+  ];
+  
+  const quizContainer = document.getElementById('quiz');
+  const resultContainer = document.getElementById('result');
+  const submitButton = document.getElementById('submit');
+  const retryButton = document.getElementById('retry');
+  const showAnswerButton = document.getElementById('showAnswer');
+  
+  let currentQuestion = 0;
+  let score = 0;
+  let incorrectAnswers = [];
+  
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+  
+  function displayQuestion() {
+    const questionData = quizData[currentQuestion];
+  
+    const questionElement = document.createElement('div');
+    questionElement.className = 'question';
+    questionElement.innerHTML = questionData.question;
+  
+    const optionsElement = document.createElement('div');
+    optionsElement.className = 'options';
+  
+    const shuffledOptions = [...questionData.options];
+    shuffleArray(shuffledOptions);
+  
+    for (let i = 0; i < shuffledOptions.length; i++) {
+      const option = document.createElement('label');
+      option.className = 'option';
+  
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'quiz';
+      radio.value = shuffledOptions[i];
+  
+      const optionText = document.createTextNode(shuffledOptions[i]);
+  
+      option.appendChild(radio);
+      option.appendChild(optionText);
+      optionsElement.appendChild(option);
+    }
+  
+    quizContainer.innerHTML = '';
+    quizContainer.appendChild(questionElement);
+    quizContainer.appendChild(optionsElement);
+  }
+  
+  function checkAnswer() {
+    const selectedOption = document.querySelector('input[name="quiz"]:checked');
+    if (selectedOption) {
+      const answer = selectedOption.value;
+      if (answer === quizData[currentQuestion].answer) {
+        score++;
+      } else {
+        incorrectAnswers.push({
+          question: quizData[currentQuestion].question,
+          incorrectAnswer: answer,
+          correctAnswer: quizData[currentQuestion].answer,
+        });
+      }
+      currentQuestion++;
+      selectedOption.checked = false;
+      if (currentQuestion < quizData.length) {
+        displayQuestion();
+      } else {
+        displayResult();
+      }
+    }
+  }
+  
+  function displayResult() {
+    quizContainer.style.display = 'none';
+    submitButton.style.display = 'none';
+    retryButton.style.display = 'inline-block';
+    showAnswerButton.style.display = 'inline-block';
+    resultContainer.innerHTML = `You scored ${score} out of ${quizData.length}!`;
+  }
+  
+  function retryQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    incorrectAnswers = [];
+    quizContainer.style.display = 'block';
+    submitButton.style.display = 'inline-block';
+    retryButton.style.display = 'none';
+    showAnswerButton.style.display = 'none';
+    resultContainer.innerHTML = '';
+    displayQuestion();
+  }
+  
+  function showAnswer() {
+    quizContainer.style.display = 'none';
+    submitButton.style.display = 'none';
+    retryButton.style.display = 'inline-block';
+    showAnswerButton.style.display = 'none';
+  
+    let incorrectAnswersHtml = '';
+    for (let i = 0; i < incorrectAnswers.length; i++) {
+      incorrectAnswersHtml += `
+        <p>
+          <strong>Question:</strong> ${incorrectAnswers[i].question}<br>
+          <strong>Your Answer:</strong> ${incorrectAnswers[i].incorrectAnswer}<br>
+          <strong>Correct Answer:</strong> ${incorrectAnswers[i].correctAnswer}
+        </p>
+      `;
+    }
+  
+    resultContainer.innerHTML = `
+      <p>You scored ${score} out of ${quizData.length}!</p>
+      <p>Incorrect Answers:</p>
+      ${incorrectAnswersHtml}
+    `;
+  }
+  
+  submitButton.addEventListener('click', checkAnswer);
+  retryButton.addEventListener('click', retryQuiz);
+  showAnswerButton.addEventListener('click', showAnswer);
+  
+  displayQuestion();
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aptitude & Reasoning Quiz(stage-2)</title>
+  <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz App</h1>
+    <div id="quiz"></div>
+    <div id="result" class="result"></div>
+    <button id="submit" class="button">Submit</button>
+    <button id="retry" class="button hide">Retry</button>
+    <button id="showAnswer" class="button hide">Show Answer</button>
+    <a href="Stages.html"><button id="back" class="button hide">Back</button></a>
+  </div>
+  <script>
+    const quizData = [
+    {
+      question: '1) Various terms of an alphabet series are given with one or more terms missing. Select the missing terms from the choices. AZ, GT, MN, ?, YB.',
+      options: ['KF', 'RX', 'SH', 'TS'],
+      answer: 'SH',
+    },
+    {
+      question: '2) The various terms of an alpha-numerical series have been given with one or more terms missing. Choose the missing terms from the choices. A/2, B/4, C/6, D/8 ',
+      options: ['E/8,F/10', 'E/12,F/14', 'E/10,F/12', 'D/10,E/10'],
+      answer: 'E/10, F/12',
+    },
+    {
+      question: '3) Poles: Magnet::? : Battery',
+      options: ['Energy', 'Power', 'Terminals', 'Cells'],
+      answer: 'Terminals',
+    },
+    {
+      question: '4) If Ajith writes code for COUNSEL as BITIRAK, how will he write GUIDANCE?',
+      options: ['EOHYZKBB', 'FOHYZJBB', 'FOHZZKAB', 'HOHYBJBA'],
+      answer: 'FOHYZJBB',
+    },
+    {
+      question: '5) Six members of a family, M, N, O, P, and Q are travelling together. M is the son of N, but N is not the mother of M. L and N are a married couple. P is the brother of N. O is the daughter of L. Q is the brother of M. How many male members are there in the family?',
+      options: ['4','3','2','1'],
+      answer: '4',
+    },
+    {
+      question: '6) An accurate clock shows 8 am. Through how may degrees will the hour hand rotate when the clock shows 2 pm?',
+      options: ['154 degree', '172 degree', '130 degree', '180 degree'],
+      answer: '180 degree',
+    },
+    {
+      question: '7) Out of 10 teachers of a Private school, one teacher retires, and in place of her, a new teacher 25 years old teachers join the faculty. As a result of its average age of the teachers reduces by 3 yrs. What is the age of the retired teacher?',
+      options: ['55','65','45','75'],
+      answer: '55',
+    },
+    {
+      question: '8) The difference between the value of the number increased by 20 % and the value of the number decreased by 25 % is 36. What is the number?',
+      options: ['720', '80', '7.2', '0.8'],
+      answer: '80',
+    },
+    {
+      question: '9) Antonym of Flagitious',
+      options: ['Vapid','Innocent','Ignorant','Frivolous'],
+      answer: 'Innocent',
+    },
+    {
+      question: '10) Find the tense of the sentence- "I shall visit the book fair tomorrow."',
+      options: ['Simple Past', 'Simple Present', 'Simple Future', 'Future Continuous'],
+      answer: 'Simple Future',
+    },
+  ];
+  
+  const quizContainer = document.getElementById('quiz');
+  const resultContainer = document.getElementById('result');
+  const submitButton = document.getElementById('submit');
+  const retryButton = document.getElementById('retry');
+  const showAnswerButton = document.getElementById('showAnswer');
+  
+  let currentQuestion = 0;
+  let score = 0;
+  let incorrectAnswers = [];
+  
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+  
+  function displayQuestion() {
+    const questionData = quizData[currentQuestion];
+  
+    const questionElement = document.createElement('div');
+    questionElement.className = 'question';
+    questionElement.innerHTML = questionData.question;
+  
+    const optionsElement = document.createElement('div');
+    optionsElement.className = 'options';
+  
+    const shuffledOptions = [...questionData.options];
+    shuffleArray(shuffledOptions);
+  
+    for (let i = 0; i < shuffledOptions.length; i++) {
+      const option = document.createElement('label');
+      option.className = 'option';
+  
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'quiz';
+      radio.value = shuffledOptions[i];
+  
+      const optionText = document.createTextNode(shuffledOptions[i]);
+  
+      option.appendChild(radio);
+      option.appendChild(optionText);
+      optionsElement.appendChild(option);
+    }
+  
+    quizContainer.innerHTML = '';
+    quizContainer.appendChild(questionElement);
+    quizContainer.appendChild(optionsElement);
+  }
+  
+  function checkAnswer() {
+    const selectedOption = document.querySelector('input[name="quiz"]:checked');
+    if (selectedOption) {
+      const answer = selectedOption.value;
+      if (answer === quizData[currentQuestion].answer) {
+        score++;
+      } else {
+        incorrectAnswers.push({
+          question: quizData[currentQuestion].question,
+          incorrectAnswer: answer,
+          correctAnswer: quizData[currentQuestion].answer,
+        });
+      }
+      currentQuestion++;
+      selectedOption.checked = false;
+      if (currentQuestion < quizData.length) {
+        displayQuestion();
+      } else {
+        displayResult();
+      }
+    }
+  }
+  
+  function displayResult() {
+    quizContainer.style.display = 'none';
+    submitButton.style.display = 'none';
+    retryButton.style.display = 'inline-block';
+    showAnswerButton.style.display = 'inline-block';
+    resultContainer.innerHTML = `You scored ${score} out of ${quizData.length}!`;
+  }
+  
+  function retryQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    incorrectAnswers = [];
+    quizContainer.style.display = 'block';
+    submitButton.style.display = 'inline-block';
+    retryButton.style.display = 'none';
+    showAnswerButton.style.display = 'none';
+    resultContainer.innerHTML = '';
+    displayQuestion();
+  }
+  
+  function showAnswer() {
+    quizContainer.style.display = 'none';
+    submitButton.style.display = 'none';
+    retryButton.style.display = 'inline-block';
+    showAnswerButton.style.display = 'none';
+  
+    let incorrectAnswersHtml = '';
+    for (let i = 0; i < incorrectAnswers.length; i++) {
+      incorrectAnswersHtml += `
+        <p>
+          <strong>Question:</strong> ${incorrectAnswers[i].question}<br>
+          <strong>Your Answer:</strong> ${incorrectAnswers[i].incorrectAnswer}<br>
+          <strong>Correct Answer:</strong> ${incorrectAnswers[i].correctAnswer}
+        </p>
+      `;
+    }
+  
+    resultContainer.innerHTML = `
+      <p>You scored ${score} out of ${quizData.length}!</p>
+      <p>Incorrect Answers:</p>
+      ${incorrectAnswersHtml}
+    `;
+  }
+  
+  submitButton.addEventListener('click', checkAnswer);
+  retryButton.addEventListener('click', retryQuiz);
+  showAnswerButton.addEventListener('click', showAnswer);
+  
+  displayQuestion();
+  </script>
+</body>
+</html>

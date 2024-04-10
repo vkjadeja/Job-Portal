@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Your custom CSS styles go here */
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="signup-form">
+                    <h2 class="mb-4">Sign Up</h2>
+                    <form id="signup-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" placeholder="Email">
+                        </div>
+                        <div class="form-group" id="role-selection">
+                            
+                            <input type="radio" name="role" id="student" value="student">
+                            <label for="student">Student</label>
+                
+                            <input type="radio" name="role" id="company" value="company">
+                            <label for="company">Company</label>
+                            
+                            <input type="radio" name="role" id="employee" value="employee">
+                            <label for ="employee">Employee</label>
+                        </div>
+                        <div class="form-group" id="student-form" style="display: none;">
+                            <input type="text" class="form-control" id="student-name" placeholder="Student Name">
+                            <input type="text" class="form-control" id="institute-name" placeholder="Institute Name">
+                            <input type="text" class="form-control" id="branch" placeholder="Branch">
+                        </div>
+                        <div class="form-group" id="company-form" style="display: none;">
+                            <input type="text" class="form-control" id="company-name" placeholder="Company Name">
+                            <input type="text" class="form-control" id="current-position" placeholder="Current Vacant Position">
+                            <input type="text" class="form-control" id="skills-required" placeholder="Skills Required">
+                            <input type="text" class="form-control" id="salary" placeholder="Salary">
+                        </div>
+                        <div class="form-group" id="employee-form" style="display: none;">
+                            <input type="text" class="form-control" id="employee-name" placeholder="Employee Name">
+                            <input type="text" class="form-control" id="current-company-name" placeholder="Current Company Name">
+                            <input type="text" class="form-control" id="employee-branch" placeholder="Branch">
+                            <input type="text" class="form-control" id="position" placeholder="Position">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-4">
+                <div id="user-list" class="hidden">
+                    <h2>User List</h2>
+                    <ul id="list" class="list-group"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const signupForm = document.getElementById("signup-form");
+            const userList = document.getElementById("user-list");
+            const list = document.getElementById("list");
+
+            // Show the appropriate form fields based on the selected role
+            const roleSelection = document.getElementById("role-selection");
+            const studentForm = document.getElementById("student-form");
+            const companyForm = document.getElementById("company-form");
+            const employeeForm = document.getElementById("employee-form");
+
+            roleSelection.addEventListener("change", function () {
+                studentForm.style.display = "none";
+                companyForm.style.display = "none";
+                employeeForm.style.display = "none";
+
+                const selectedRole = document.querySelector('input[name="role"]:checked').value;
+
+                if (selectedRole === "student") {
+                    studentForm.style.display = "block";
+                } else if (selectedRole === "company") {
+                    companyForm.style.display = "block";
+                } else if (selectedRole === "employee") {
+                    employeeForm.style.display = "block";
+                }
+            });
+
+            // Handle form submission
+            const submitButton = document.getElementById("submit");
+            submitButton.addEventListener("click", function () {
+                const userData = {
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    role: document.querySelector('input[name="role"]:checked').value,
+                };
+
+                if (userData.role === "student") {
+                    userData.studentName = document.getElementById("student-name").value;
+                    userData.instituteName = document.getElementById("institute-name").value;
+                    userData.branch = document.getElementById("branch").value;
+                } else if (userData.role === "company") {
+                    userData.companyName = document.getElementById("company-name").value;
+                    userData.currentPosition = document.getElementById("current-position").value;
+                    userData.skillsRequired = document.getElementById("skills-required").value;
+                    userData.salary = document.getElementById("salary").value;
+                } else if (userData.role === "employee") {
+                    userData.employeeName = document.getElementById("employee-name").value;
+                    userData.currentCompanyName = document.getElementById("current-company-name").value;
+                    userData.employeeBranch = document.getElementById("employee-branch").value;
+                    userData.position = document.getElementById("position").value;
+                }
+
+                // Store data in local storage
+                let userListData = JSON.parse(localStorage.getItem("userList")) || [];
+                userListData.push(userData);
+                localStorage.setItem("userList", JSON.stringify(userListData));
+
+                // Display the user list
+                list.innerHTML = "";
+                userListData.forEach((user) => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `Name: ${user.name}, Role: ${user.role}`;
+                    list.appendChild(listItem);
+                });
+
+                signupForm.reset();
+                userList.style.display = "block";
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body style="border:fit-content;">
+        <div>
+        <form class="f1" id="f1" action="login.php">
+            <h1>L O G&nbsp;&nbsp; I N</h1>
+            <p>Please fill this form to create an account.</p>
+            <div id="signupForm">
+                <table class="center">
+                    <tr>
+                        <td>
+                            <label for="email"><b>Email </b></label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input type="text"placeholder="Enter Email"name="email"required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="psw"><b>Password</b></label>
+                        </td>
+                        <td>:</td>
+                        <td style="margin-top: 5px;">
+                            <input type="password"placeholder="Enter Password"name="psw"required><br><br>
+                        </td>
+                    </tr>
+                        <td colspan="3">
+                            <button type="button" class="cancelbtn">cancel</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit"class="signupbtn"onclick="replaceWithSecondForm()"id="submit">Log in</button>
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        </form>
+        <div id="container" style="display: none;">    
+        <form>
+            <label for="radio1"></label>
+            <input type="radio"name="user" value="student"id="radio1"class="radio">student
+            <label for="radio2"></label>
+            <input type="radio"name="user" value="employee"id="radio2"class="radio">employee
+            <label for="radio3"></label>
+            <input type="radio"name="user" value="company"id="radio3"class="radio">company
+        </form>
+       
+        <form id="student"class="hidden1"style="display:none;padding-up: 3px;">
+            Student Name:<input type="text" name="studentname" id="i1"placeholder="Enter your Name"><br><br>
+            Institute Name:<input type="text"name="institute"id="i2"placeholder="Enter an institute"><br><br>
+            Branch:<input type="text"name="brach"id="i3"placeholder="Enter a brach"><br><br>
+            <button type="submit"class="signupbtn"id="submit"value="submit">submit</button>
+        </form>
+       
+        <form id="employee"class="hidden2"style="display:none;padding-up:3px;">
+            employee Name:<input type="text"name="empname"id="i3"placeholder="Enter a name"><br><br>
+            Current company Name:<input type="text"name="institute"id="i4"placeholder="Enter company name"><br><br>
+            Branch:<input type="text"name="branch"id="i5"placeholder="Enter a branch"><br><br>
+            position:<input type="text"name="position"id="i6"placeholder="Enter your position in current company"><br><br>
+            <button type="submit"class="signupbtn"id="submit"value="submit">submit</button>
+        </form>
+       
+        <form id="company"class="hidden3"style="display: none;padding-up:3px;">
+            Company Name:<input type="text"name="comname"id="i7"placeholder="Enter Company Name"><br><br>
+            Current vacant position:<input type="text"name="vacant"id="i8"placeholder="Vacant position name "><br><br>
+            Skills required:<input type="text"name="branch"id="i5"placeholder="Skills needed for vacant position"><br><br>
+            salary:<input type="text"name="salary"id="i6"placeholder="Average Salary for a given position"><br><br>
+            Sector:<input type="text"name="Sector"placeholder="Name a sector of vacant position">
+            <button type="submit"class="signupbtn"id="submit"value="submit">submit</button>
+        </form>
+        </div>
+    </div>
+        <script src="login.js"></script>
+    </body>
+</html>
